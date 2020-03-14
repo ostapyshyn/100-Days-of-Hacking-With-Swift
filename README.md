@@ -1,2 +1,2 @@
 # 100-Days-of-Hacking-With-Swift
-# Day 1...7 ✅
+# Days 1...7: Introduction to Swift ✅

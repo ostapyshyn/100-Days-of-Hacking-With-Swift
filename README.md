@@ -5,6 +5,6 @@
 ### Days 16...22: Starting iOS
 
 ### Project 1: Storm Viewer
-Constants and variables, UITableView, UIImageView, FileManager, storyboards. 
+Constants and variables, UITableView, UIImageView, FileManager, storyboards.<br/>
 Get started coding in Swift by making an image viewer app and learning key concepts.
 

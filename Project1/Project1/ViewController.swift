@@ -26,7 +26,10 @@ class ViewController: UITableViewController {
                 pictures.append(item)
             }
         }
-        print(pictures)
+        pictures.sort()
+        
+        //let sortedPics = pictures.sorted()
+        print(pictures.sorted())
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -34,6 +37,7 @@ class ViewController: UITableViewController {
         if let vc = storyboard?.instantiateViewController(withIdentifier: "Detail") as? DetailViewController {
             // 2: success! Set its selectedImage property
             vc.selectedImage = pictures[indexPath.row]
+            vc.pictures = pictures
 
             // 3: now push it onto the navigation controller
             navigationController?.pushViewController(vc, animated: true)

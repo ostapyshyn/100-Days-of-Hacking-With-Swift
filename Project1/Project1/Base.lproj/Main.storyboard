@@ -16,15 +16,15 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Picture" textLabel="LDL-yj-nFT" style="IBUITableViewCellStyleDefault" id="tVU-Wm-JIc">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Picture" textLabel="LDL-yj-nFT" style="IBUITableViewCellStyleDefault" id="tVU-Wm-JIc">
                                 <rect key="frame" x="0.0" y="28" width="375" height="43.666667938232422"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="tVU-Wm-JIc" id="AIA-zD-B5T">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.666667938232422"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="348" height="43.666667938232422"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="LDL-yj-nFT">
-                                            <rect key="frame" x="16" y="0.0" width="343" height="43.666667938232422"/>
+                                            <rect key="frame" x="16" y="0.0" width="324" height="43.666667938232422"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>

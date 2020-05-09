@@ -23,11 +23,8 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         countries += ["estonia", "france", "germany", "ireland", "italy", "monaco", "nigeria", "poland", "russia", "spain", "uk", "us"]
-        
         setBorderImage()
-        
         askQuestion()
-        // Do any additional setup after loading the view.
     }
     
     func askQuestion(action: UIAlertAction! = nil) {
@@ -67,11 +64,17 @@ class ViewController: UIViewController {
             ac.addAction(UIAlertAction(title: "Continue", style: .default, handler: nil))
             question = 0
             present(ac, animated: true)
-        } else {
-            let ac = UIAlertController(title: title, message: "Your score is \(score).", preferredStyle: .alert)
+        }
+        
+        if sender.tag != correctAnswer {
+            let ac = UIAlertController(title: "Wrong!", message: "That’s the flag of \(sender.currentImage?.accessibilityIdentifier?.uppercased() ?? "0").", preferredStyle: .alert)
             ac.addAction(UIAlertAction(title: "Continue", style: .default, handler: askQuestion))
             present(ac, animated: true)
         }
+        
+        let ac = UIAlertController(title: title, message: "Your score is \(score).", preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "Continue", style: .default, handler: askQuestion))
+        present(ac, animated: true)
     }
 }
 

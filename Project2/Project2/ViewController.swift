@@ -14,7 +14,9 @@ class ViewController: UIViewController {
     @IBOutlet var button3: UIButton!
     
     var countries = [String]()
+    var correctAnswer = 0
     var score = 0
+    var question = 0
     
     
     
@@ -28,10 +30,13 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
-    func askQuestion() {
+    func askQuestion(action: UIAlertAction! = nil) {
+        countries.shuffle()
+        correctAnswer = Int.random(in: 0...2)
         button1.setImage(UIImage(named: countries[0]), for: .normal)
         button2.setImage(UIImage(named: countries[1]), for: .normal)
         button3.setImage(UIImage(named: countries[2]), for: .normal)
+        title = countries[correctAnswer].uppercased() + " Score: \(score)"
     }
     
     fileprivate func setBorderImage() {
@@ -42,6 +47,31 @@ class ViewController: UIViewController {
         button1.layer.borderColor = UIColor.lightGray.cgColor
         button2.layer.borderColor = UIColor.lightGray.cgColor
         button3.layer.borderColor = UIColor.lightGray.cgColor
+    }
+    
+    @IBAction func buttonTapped(_ sender: UIButton) {
+        var title: String
+        question += 1
+        print(question)
+        
+        if sender.tag == correctAnswer {
+            title = "Correct"
+            score += 1
+        } else {
+            title = "Wrong"
+            score -= 1
+        }
+        
+        if question == 10 {
+            let ac = UIAlertController(title: "Result:", message: "Your final score is \(score).", preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "Continue", style: .default, handler: nil))
+            question = 0
+            present(ac, animated: true)
+        } else {
+            let ac = UIAlertController(title: title, message: "Your score is \(score).", preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "Continue", style: .default, handler: askQuestion))
+            present(ac, animated: true)
+        }
     }
 }
 

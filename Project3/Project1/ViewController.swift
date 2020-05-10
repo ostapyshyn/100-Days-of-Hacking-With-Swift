@@ -26,9 +26,6 @@ class ViewController: UITableViewController {
                 pictures.append(item)
             }
         }
-        
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(shareTapped))
-        
         pictures.sort()
         
         //let sortedPics = pictures.sorted()
@@ -56,15 +53,6 @@ class ViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Picture", for: indexPath)
         cell.textLabel?.text = pictures[indexPath.row]
         return cell
-    }
-    
-    @objc func shareTapped() {
-        
-        let recomendation = "I recomend this app: StormViewer"
-        
-        let vc = UIActivityViewController(activityItems: [recomendation], applicationActivities: [])
-        vc.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
-        present(vc, animated: true)
     }
 }
 

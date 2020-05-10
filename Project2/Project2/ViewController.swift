@@ -25,6 +25,8 @@ class ViewController: UIViewController {
         countries += ["estonia", "france", "germany", "ireland", "italy", "monaco", "nigeria", "poland", "russia", "spain", "uk", "us"]
         setBorderImage()
         askQuestion()
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(shareTapped))
     }
     
     func askQuestion(action: UIAlertAction! = nil) {
@@ -75,6 +77,14 @@ class ViewController: UIViewController {
         let ac = UIAlertController(title: title, message: "Your score is \(score).", preferredStyle: .alert)
         ac.addAction(UIAlertAction(title: "Continue", style: .default, handler: askQuestion))
         present(ac, animated: true)
+    }
+    
+    @objc func shareTapped() {
+        let shareScore = "Your score is \(score)" //show and share
+        
+        let vc = UIActivityViewController(activityItems: [shareScore, " Plese share with your friends."], applicationActivities: [])
+        vc.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
+        present(vc, animated: true)
     }
 }
 

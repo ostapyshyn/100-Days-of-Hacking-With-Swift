@@ -11,9 +11,17 @@ import UIKit
 class ViewController: UITableViewController {
     
     var petitions = [Petition]()
+    var filteredPetitions = [Petition]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        navigationItem.title = "Petitions"
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Credits", style: .plain, target: self, action: #selector(info))
+        
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Filter", style: .plain, target: self, action: #selector(filter))
+        
         
         // let urlString = "https://api.whitehouse.gov/v1/petitions.json?limit=100"
         let urlString: String
@@ -29,12 +37,57 @@ class ViewController: UITableViewController {
         if let url = URL(string: urlString) {
             if let data = try? Data(contentsOf: url) {
                 parse(json: data)
+                filteredPetitions = petitions
                 return
             }
         }
         
         showError()
     
+    }
+    
+    @objc func info() {
+        let ac = UIAlertController(title: "About", message: "The data comes from the We The People API of the Whitehouse.", preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "OK", style: .default))
+        present(ac, animated: true)
+    }
+    
+    @objc func filter() {
+        let ac = UIAlertController(title: "Filter:", message: nil, preferredStyle: .alert)
+        ac.addTextField()
+
+        let submitAction = UIAlertAction(title: "Submit", style: .default) { [weak self, weak ac] action in
+            guard let answer = ac?.textFields?[0].text else { return }
+            self?.submit(answer: answer)
+        }
+        
+        let showAll = UIAlertAction(title: "Show all", style: .default) { [weak self, weak ac] action in
+            guard let answer = ac?.textFields?[0].text else { return }
+            self?.showAll(answer: answer)
+        }
+        ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        ac.addAction(submitAction)
+        ac.addAction(showAll)
+        present(ac, animated: true)
+    }
+    
+    func submit(answer: String) {
+        filteredPetitions = []
+        
+        filteredPetitions = petitions.filter({ petition -> Bool in
+            return petition.title.contains(answer)
+        })
+//        for petition in petitions {
+//            if petition.title.contains(answer) {
+//                filtredPetitions.append(petition)
+//            }
+//        }
+        tableView.reloadData()
+    }
+    
+    func showAll(answer: String) {
+        filteredPetitions = petitions
+        tableView.reloadData()
     }
     
     func showError() {
@@ -53,12 +106,12 @@ class ViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return petitions.count
+        return filteredPetitions.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-        let petition = petitions[indexPath.row]
+        let petition = filteredPetitions[indexPath.row]
         cell.textLabel?.text = petition.title
         cell.detailTextLabel?.text = petition.body
         return cell
@@ -66,7 +119,7 @@ class ViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = DetailViewController()
-        vc.detailItem = petitions[indexPath.row]
+        vc.detailItem = filteredPetitions[indexPath.row]
         navigationController?.pushViewController(vc, animated: true)
     }
 

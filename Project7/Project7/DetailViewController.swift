@@ -32,7 +32,8 @@ class DetailViewController: UIViewController {
         <body>
         <h3>\(detailItem.title)</h3>
         <p>\(detailItem.body)</p>
-        <p>Signatures: \(detailItem.signatureCount)</p>
+        <p><strong> Signatures: \(detailItem.signatureCount)</strong></p>
+        <p><a href="\(detailItem.url)" style="color: #007AFF; text-decoration: none">\(detailItem.url)</a></p>
         </body>
         </html>
         """

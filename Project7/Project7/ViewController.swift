@@ -12,7 +12,7 @@ class ViewController: UITableViewController {
     
     var petitions = [Petition]()
     var filteredPetitions = [Petition]()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -33,7 +33,7 @@ class ViewController: UITableViewController {
             // urlString = "https://api.whitehouse.gov/v1/petitions.json?signatureCountFloor=10000&limit=100"
             urlString = "https://www.hackingwithswift.com/samples/petitions-2.json"
         }
-
+        
         if let url = URL(string: urlString) {
             if let data = try? Data(contentsOf: url) {
                 parse(json: data)
@@ -43,7 +43,7 @@ class ViewController: UITableViewController {
         }
         
         showError()
-    
+        
     }
     
     @objc func info() {
@@ -55,7 +55,7 @@ class ViewController: UITableViewController {
     @objc func filter() {
         let ac = UIAlertController(title: "Filter:", message: nil, preferredStyle: .alert)
         ac.addTextField()
-
+        
         let submitAction = UIAlertAction(title: "Submit", style: .default) { [weak self, weak ac] action in
             guard let answer = ac?.textFields?[0].text else { return }
             self?.submit(answer: answer)
@@ -72,17 +72,22 @@ class ViewController: UITableViewController {
     }
     
     func submit(answer: String) {
-        filteredPetitions = []
-        
-        filteredPetitions = petitions.filter({ petition -> Bool in
-            return petition.title.contains(answer)
-        })
-//        for petition in petitions {
-//            if petition.title.contains(answer) {
-//                filtredPetitions.append(petition)
-//            }
-//        }
-        tableView.reloadData()
+        //Day 40 -> challenge 3, put your filtering code in the background
+        DispatchQueue.global().async {
+            self.filteredPetitions = []
+            
+            self.filteredPetitions = self.petitions.filter({ petition -> Bool in
+                return petition.title.contains(answer)
+            })
+            //        for petition in petitions {
+            //            if petition.title.contains(answer) {
+            //                filtredPetitions.append(petition)
+            //            }
+            //        }
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
     }
     
     func showAll(answer: String) {
@@ -98,7 +103,7 @@ class ViewController: UITableViewController {
     
     func parse(json: Data) {
         let decoder = JSONDecoder()
-
+        
         if let jsonPetitions = try? decoder.decode(Petitions.self, from: json) {
             petitions = jsonPetitions.results
             tableView.reloadData()
@@ -122,7 +127,7 @@ class ViewController: UITableViewController {
         vc.detailItem = filteredPetitions[indexPath.row]
         navigationController?.pushViewController(vc, animated: true)
     }
-
-
+    
+    
 }
 

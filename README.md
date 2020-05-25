@@ -6,8 +6,10 @@
 ### ✅ Day 23: Consolidation II
 ### ✅ Days 24...31: Web views, user input, and Auto Layout
 ### ✅ Day 32: Consolidation III
-###    Days 33...40: Codable, buttons, and GCD
-###    Day 41: Consolidation IV
+### ✅ Days 33...40: Codable, buttons, and GCD
+### ✅ Day 41: Consolidation IV
+###    Days 42...49: A whole new world
+###    Days 50...51: Consolidation V
 
 ### ✅ Project 1: Storm Viewer 
 Constants and variables, UITableView, UIImageView, FileManager, storyboards.<br/>
@@ -33,6 +35,18 @@ Create an anagram game while learning about closures and booleans.
 NSLayoutConstraint, Visual Format Language, layout anchors
 Get to grips with Auto Layout using practical examples and code.
 
-###    Project 7: Whitehouse Petitions
+### ✅ Project 7: Whitehouse Petitions
 JSON, Data, UITabBarController
 Make an app to parse Whitehouse petitions using JSON and a tab bar.
+
+### ✅ Project 8: 7 Swifty Words
+addTarget(), enumerated(), count(), index(of:), joined(), property observers, range operators
+Build a word-guessing game and master strings once and for all.
+
+### ✅ Project 9: Grand Central Dispatch
+DispatchQueue, perform(inBackground:)
+Learn how to run complex tasks in the background with GCD.
+
+###   Project 10: Names to Faces
+UICollectionView, UIImagePickerController, UUID, classes
+Get started with UICollectionView and the photo library.

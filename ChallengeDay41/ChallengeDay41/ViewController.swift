@@ -11,6 +11,7 @@ import UIKit
 class ViewController: UIViewController {
     
     var letterButtons = [UIButton]()
+    var scoreLabel: UILabel!
     var currentAnswer: UITextField!
     var submit: UIButton!
     var buttonsView: UIView!
@@ -21,6 +22,11 @@ class ViewController: UIViewController {
     var usedLetters = [String]()
     var round = 0
     var lives = 7
+    var score = 0 {
+        didSet {
+            scoreLabel.text = "Score: \(score)"
+        }
+    }
     
     var wordToGuess: String!
     var promptWord:String!
@@ -47,7 +53,7 @@ class ViewController: UIViewController {
         
         NSLayoutConstraint.activate([
             guessedWord.topAnchor.constraint(equalTo: guessesRemaining.bottomAnchor, constant: 24),
-            guessedWord.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            guessedWord.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
     }
     
@@ -72,6 +78,8 @@ class ViewController: UIViewController {
         configureCurrentAnswer()
         configureGuessesRemaining()
         configureGuessedWord()
+        configureNewGameButton()
+        configureScoreLabel()
     }
     
     func configureCurrentAnswer() {
@@ -90,41 +98,59 @@ class ViewController: UIViewController {
         ])
     }
     
-    func loadLevel() {
+    func configureScoreLabel() {
+        scoreLabel = UILabel()
+        scoreLabel.translatesAutoresizingMaskIntoConstraints = false
+        scoreLabel.textAlignment = .right
+        scoreLabel.text = "Score: 0"
+        scoreLabel.font = UIFont.systemFont(ofSize: 24)
+        view.addSubview(scoreLabel)
+        
+        NSLayoutConstraint.activate([
+            scoreLabel.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor),
+            scoreLabel.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor)
+        ])
+    }
+    
+    @objc func loadLevel() {
         
         let str = "abcdefghijklmnopqrstuvwxyz"
         let letters = Array(str.uppercased())
         //print(letters.count)
         //print(letterButtons.count)
-        solutions.removeAll()
-        
-        for i in 0 ..< letterButtons.count {
-            self.letterButtons[i].setTitle(letters[i].description, for: .normal)
-        }
-        
-        if let levelFileURL = Bundle.main.url(forResource: "Words", withExtension: "txt") {
-            if let levelContents = try? String(contentsOf: levelFileURL) {
-                var lines = levelContents.components(separatedBy: "\n")
-                lines.shuffle()
-                print(lines)
-                
-                for word in lines {
-                    solutions.append(word)
-
-                }
+        startNewGame()
+        DispatchQueue.main.async {
+            for i in 0 ..< self.letterButtons.count {
+                self.letterButtons[i].setTitle(letters[i].description, for: .normal)
             }
         }
-        var count = solutions.count
-        print(solutions[round] + " solutions round + \(count)")
-        wordToGuess = solutions[round]
-        print(wordToGuess! + " from loadLevel")
-        promptWord = ""
-        for _ in 0..<solutions[round].count {
-            promptWord += "?"
+        DispatchQueue.global().async {
+            if let levelFileURL = Bundle.main.url(forResource: "Words", withExtension: "txt") {
+                if let levelContents = try? String(contentsOf: levelFileURL) {
+                    var lines = levelContents.components(separatedBy: "\n")
+                    lines.shuffle()
+                    print(lines)
+                    
+                    for word in lines {
+                        self.solutions.append(word)
+                        
+                    }
+                }
+            }
+            
+            let count = self.solutions.count
+            print(self.solutions[self.round] + " solutions round + \(count)")
+            self.wordToGuess = self.solutions[self.round]
+            print(self.wordToGuess! + " from loadLevel")
+            self.promptWord = ""
+            for _ in 0..<self.solutions[self.round].count {
+                self.promptWord += "?"
+            }
+            print(self.promptWord!)
+            DispatchQueue.main.async {
+                self.guessedWord.text = self.promptWord
+            }
         }
-        print(promptWord!)
-        guessedWord.text = promptWord
-        
         
     }
     
@@ -140,6 +166,20 @@ class ViewController: UIViewController {
             clear.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 100),
             clear.bottomAnchor.constraint(equalTo: buttonsView.topAnchor),
             clear.heightAnchor.constraint(equalToConstant: 44)
+        ])
+    }
+    
+    func configureNewGameButton() {
+        let clear = UIButton(type: .system)
+        clear.translatesAutoresizingMaskIntoConstraints = false
+        clear.setTitle("New Game", for: .normal)
+        clear.addTarget(self, action: #selector(loadLevel), for: .touchUpInside)
+        clear.titleLabel?.font = UIFont.systemFont(ofSize: 24)
+        view.addSubview(clear)
+        
+        NSLayoutConstraint.activate([
+            clear.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor),
+            clear.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor)
         ])
     }
     
@@ -224,8 +264,21 @@ class ViewController: UIViewController {
         for btn in activatedButtons {
             btn.isHidden = false
         }
-
+        
         activatedButtons.removeAll()
+    }
+    
+    @objc func startNewGame() {
+        lives = 7
+        score = 0
+        usedLetters.removeAll()
+        guessesRemaining.text = "Guesses Remaining: \(lives)"
+        for btn in letterButtons {
+            btn.isHidden = false
+        }
+        solutions.removeAll()
+        
+        
     }
     
     @objc func submitTapped(_ sender: UIButton) {
@@ -238,11 +291,12 @@ class ViewController: UIViewController {
         
         activatedButtons.removeAll()
         usedLetters.append(answerText)
+        
         promptWord = ""
         
         if !wordToGuess.contains(answerText) {
             lives -= 1
-            
+            score -= 1
             guessesRemaining.text = "Guesses Remaining: \(lives)"
             print(guessesRemaining.text!)
             if lives == 0 {
@@ -252,13 +306,15 @@ class ViewController: UIViewController {
                 return
                 
             }
+        } else {
+            score += 1
         }
         
         
-
+        
         for letter in wordToGuess {
             let strLetter = String(letter)
-
+            
             if usedLetters.contains(strLetter) {
                 promptWord += strLetter
                 
@@ -268,8 +324,13 @@ class ViewController: UIViewController {
             }
             
         }
-        
         guessedWord.text = promptWord
+        if promptWord == wordToGuess {
+            showYouWinMessage()
+            return
+        }
+        
+        
         
         print(promptWord!)
         clearTapped()
@@ -284,11 +345,17 @@ class ViewController: UIViewController {
         present(ac, animated: true)
     }
     
+    func showYouWinMessage() {
+        let ac = UIAlertController(title: "Congratulations", message: "You won the game!", preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "OK", style: .default))
+        present(ac, animated: true)
+    }
+    
     func showEndGameMessage() {
         let ac = UIAlertController(title: "Incorrect guess", message: "You Lost The Game", preferredStyle: .alert)
         ac.addAction(UIAlertAction(title: "OK", style: .default))
         present(ac, animated: true)
     }
-
+    
 }
 

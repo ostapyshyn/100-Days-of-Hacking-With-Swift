@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0B5269132488E7B20083E55C /* PersonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B5269122488E7B20083E55C /* PersonCell.swift */; };
+		0B70F566248A09810037B627 /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B70F565248A09810037B627 /* Person.swift */; };
 		0B969630248834700035093F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B96962F248834700035093F /* AppDelegate.swift */; };
 		0B969632248834700035093F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B969631248834700035093F /* SceneDelegate.swift */; };
 		0B969634248834700035093F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B969633248834700035093F /* ViewController.swift */; };
@@ -18,6 +19,7 @@
 
 /* Begin PBXFileReference section */
 		0B5269122488E7B20083E55C /* PersonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonCell.swift; sourceTree = "<group>"; };
+		0B70F565248A09810037B627 /* Person.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Person.swift; sourceTree = "<group>"; };
 		0B96962C248834700035093F /* Project10.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Project10.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0B96962F248834700035093F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0B969631248834700035093F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -61,6 +63,7 @@
 				0B96962F248834700035093F /* AppDelegate.swift */,
 				0B969631248834700035093F /* SceneDelegate.swift */,
 				0B969633248834700035093F /* ViewController.swift */,
+				0B70F565248A09810037B627 /* Person.swift */,
 				0B969635248834700035093F /* Main.storyboard */,
 				0B5269122488E7B20083E55C /* PersonCell.swift */,
 				0B969638248834720035093F /* Assets.xcassets */,
@@ -141,6 +144,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0B70F566248A09810037B627 /* Person.swift in Sources */,
 				0B969634248834700035093F /* ViewController.swift in Sources */,
 				0B969630248834700035093F /* AppDelegate.swift in Sources */,
 				0B5269132488E7B20083E55C /* PersonCell.swift in Sources */,

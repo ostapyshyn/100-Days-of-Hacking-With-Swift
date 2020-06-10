@@ -9,8 +9,11 @@
 import UIKit
 
 class ViewController: UITableViewController {
+    
+    let defaults = UserDefaults.standard
 
     var pictures = [String]()
+    var timesShown = [Int]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,6 +31,8 @@ class ViewController: UITableViewController {
         
         //let sortedPics = pictures.sorted()
         print(pictures.sorted())
+        timesShown = defaults.object(forKey: "SavedArray") as? [Int] ?? [Int]()
+        
     }
     
     @objc func fetchPics() {
@@ -43,6 +48,10 @@ class ViewController: UITableViewController {
         pictures.sort()
         print("Finished loading pictures")
         
+        timesShown = Array(repeating: 0, count: pictures.count)
+        print("\(timesShown.count) times shown")
+        print(timesShown)
+        
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -51,7 +60,10 @@ class ViewController: UITableViewController {
             // 2: success! Set its selectedImage property
             vc.selectedImage = pictures[indexPath.row]
             vc.pictures = pictures
-
+            timesShown[indexPath.row] += 1
+            defaults.set(timesShown, forKey: "SavedArray")
+            tableView.reloadData()
+            
             // 3: now push it onto the navigation controller
             navigationController?.pushViewController(vc, animated: true)
             
@@ -65,6 +77,9 @@ class ViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Picture", for: indexPath)
         cell.textLabel?.text = pictures[indexPath.row]
+    
+        cell.detailTextLabel?.text = "Shown \(timesShown[indexPath.row])"
+        
         return cell
     }
     

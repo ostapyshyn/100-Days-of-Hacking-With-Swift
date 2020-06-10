@@ -84,9 +84,9 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
         let person = Person(name: "Unknown", image: imageName)
         people.append(person)
         collectionView.reloadData()
-
-        dismiss(animated: true)
         self.save()
+        dismiss(animated: true)
+        
     }
 
     func getDocumentsDirectory() -> URL {
@@ -120,7 +120,7 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
 //            self.people.remove(at: indexPath.item)
 //            collectionView.reloadData()
 //        }
-        self.save()
+        
         ac.addAction(deleteAction)
         
         

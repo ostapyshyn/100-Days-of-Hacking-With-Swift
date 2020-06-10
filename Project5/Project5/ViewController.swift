@@ -10,9 +10,15 @@ import UIKit
 
 class ViewController: UITableViewController {
     
+    let defaults = UserDefaults.standard
     var allWords = [String]()
     var usedWords = [String]()
     var word: String?
+    
+    
+    
+    
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,17 +36,33 @@ class ViewController: UITableViewController {
             allWords = ["silkworm"]
         }
         
+        //usedWords.removeAll(keepingCapacity: true)
+        usedWords = defaults.object(forKey: "SavedArray") as? [String] ?? [String]()
         
+        word = defaults.string(forKey: "currentWord") ?? ""
         
-        startGame()
+        if word == "" {
+            print("empty")
+            startGame()
+        } else {
+            title = word
+            print("not empty")
+        }
+    }
+    
+    func updateViews() {
+        
+        tableView.reloadData()
     }
     
     @objc func startGame() {
-        title = allWords.randomElement()
-        word = title
-        usedWords.removeAll(keepingCapacity: true)
+        word = allWords.randomElement()
+        defaults.set(word, forKey: "currentWord")
+        title = word
         tableView.reloadData()
     }
+    
+    
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return usedWords.count
@@ -59,7 +81,7 @@ class ViewController: UITableViewController {
             if isOriginal(word: lowerAnswer) {
                 if isReal(word: lowerAnswer) {
                     usedWords.insert(lowerAnswer, at: 0)
-
+                    defaults.set(usedWords, forKey: "SavedArray")
                     let indexPath = IndexPath(row: 0, section: 0)
                     tableView.insertRows(at: [indexPath], with: .automatic)
 

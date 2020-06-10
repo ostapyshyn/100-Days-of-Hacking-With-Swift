@@ -13,15 +13,27 @@ class ViewController: UIViewController {
     @IBOutlet var button2: UIButton!
     @IBOutlet var button3: UIButton!
     
+    let defaults = UserDefaults.standard
+    
     var countries = [String]()
     var correctAnswer = 0
-    var score = 0
+    var score: Int = 0 {
+        didSet {
+            if score > highestScore {
+                highestScore = score
+                defaults.set(highestScore, forKey: "highestScore")
+                showNewRecord()
+            }
+        }
+    }
+    var highestScore = 0
     var question = 0
     
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        highestScore = defaults.integer(forKey: "highestScore")
         countries += ["estonia", "france", "germany", "ireland", "italy", "monaco", "nigeria", "poland", "russia", "spain", "uk", "us"]
         setBorderImage()
         askQuestion()
@@ -35,7 +47,7 @@ class ViewController: UIViewController {
         button1.setImage(UIImage(named: countries[0]), for: .normal)
         button2.setImage(UIImage(named: countries[1]), for: .normal)
         button3.setImage(UIImage(named: countries[2]), for: .normal)
-        title = countries[correctAnswer].uppercased() + " Score: \(score)"
+        title = countries[correctAnswer].uppercased() + " Score: \(score) Record: \(highestScore)"
     }
     
     fileprivate func setBorderImage() {
@@ -62,9 +74,11 @@ class ViewController: UIViewController {
         }
         
         if question == 10 {
+            //score = 0
             let ac = UIAlertController(title: "Result:", message: "Your final score is \(score).", preferredStyle: .alert)
             ac.addAction(UIAlertAction(title: "Continue", style: .default, handler: nil))
             question = 0
+            
             present(ac, animated: true)
         }
         
@@ -85,6 +99,12 @@ class ViewController: UIViewController {
         let vc = UIActivityViewController(activityItems: [shareScore, " Plese share with your friends."], applicationActivities: [])
         vc.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
         present(vc, animated: true)
+    }
+    
+    func showNewRecord() {
+        let ac = UIAlertController(title: "RECORD!", message: "New Record is \(score).", preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "Continue", style: .default, handler: askQuestion))
+        present(ac, animated: true)
     }
 }
 

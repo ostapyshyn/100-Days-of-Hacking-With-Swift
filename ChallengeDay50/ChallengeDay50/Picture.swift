@@ -8,7 +8,7 @@
 
 import UIKit
 
-class Picture {
+class Picture: Codable {
 
     var name: String
     var caption: String

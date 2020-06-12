@@ -14,6 +14,7 @@ class DetailVC: UIViewController {
     @IBOutlet var pictureImage: UIImageView!
     var selectedImage: Picture?
     var table: UITableView?
+    var mainClass: ViewController?
     
     
     override func viewDidLoad() {
@@ -24,17 +25,12 @@ class DetailVC: UIViewController {
             print("No Image")
             return
         }
-        
-        
-        
-        
+    
         let path = getDocumentsDirectory().appendingPathComponent(selectedImage.name)
         
         pictureImage.image = UIImage(contentsOfFile: path.path)
         
-        
-        
-        
+
         title = selectedImage.caption
         
         //navigationItem.largeTitleDisplayMode = .never
@@ -59,7 +55,8 @@ class DetailVC: UIViewController {
             ac.addAction(cancelAction)
                     
             ac.addAction(renameAction)
-
+        
+            
             present(ac, animated: true)
 
         }
@@ -82,9 +79,22 @@ class DetailVC: UIViewController {
             self!.table?.reloadData()
             self!.title = newName
 
-            //self?.table.reloadData()
         })
-
+        
+        
         present(ac, animated: true)
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        mainClass?.save()
+        navigationController?.hidesBarsOnTap = false
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.hidesBarsOnTap = true
+    }
+    
+    
 }

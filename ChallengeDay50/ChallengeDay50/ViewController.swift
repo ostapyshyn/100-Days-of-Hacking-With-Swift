@@ -12,9 +12,25 @@ class ViewController: UITableViewController, UIImagePickerControllerDelegate & U
     
     var pictures = [Picture]()
     var currentPicture: Picture?
+    var state: UIViewController?
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let defaults = UserDefaults.standard
+
+        if let savedPictures = defaults.object(forKey: "pictures") as? Data {
+            let jsonDecoder = JSONDecoder()
+
+            do {
+                pictures = try jsonDecoder.decode([Picture].self, from: savedPictures)
+            } catch {
+                print("Failed to load pictures")
+            }
+        }
+        
+        
         title = "Your Photos:"
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(addPhoto))
@@ -46,13 +62,11 @@ class ViewController: UITableViewController, UIImagePickerControllerDelegate & U
             try? jpegData.write(to: imagePath)
         }
         
-        let picture = Picture(name: imageName, caption: "not set")
+        let picture = Picture(name: imageName, caption: "Set a caption")
         
         pictures.append(picture)
         
-        let path = getDocumentsDirectory().appendingPathComponent(picture.name)
-        print("\(path.path) up")
-
+        self.save()
         tableView.reloadData()
 
         dismiss(animated: true)
@@ -80,8 +94,6 @@ class ViewController: UITableViewController, UIImagePickerControllerDelegate & U
         cell.pictureImage?.image = UIImage(contentsOfFile: path.path)
         cell.captionLabel.text = picture.caption
         
-        print("\(path.path) down")
-
         return cell
     }
     
@@ -89,20 +101,31 @@ class ViewController: UITableViewController, UIImagePickerControllerDelegate & U
         return CGFloat(112)
     }
     
+    func save() {
+        let jsonEncoder = JSONEncoder()
+        if let savedData = try? jsonEncoder.encode(pictures) {
+            let defaults = UserDefaults.standard
+            defaults.set(savedData, forKey: "pictures")
+            print("Saved")
+        } else {
+            print("Failed to save people.")
+        }
+    }
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         if let vc = storyboard?.instantiateViewController(withIdentifier: "DetailVC") as? DetailVC {
             currentPicture = pictures[indexPath.row]
-            vc.selectedImage = currentPicture//currentPictures[indexPath.row]
+            vc.selectedImage = currentPicture
             vc.table = tableView
-            
-            print("\(indexPath.row) current row")
+            vc.mainClass = self
             
             tableView.reloadData()
 
             navigationController?.pushViewController(vc, animated: true)
-
         }
     }
+    
+    
 }
 

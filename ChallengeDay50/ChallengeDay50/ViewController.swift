@@ -11,8 +11,7 @@ import UIKit
 class ViewController: UITableViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate  {
     
     var pictures = [Picture]()
-    var currentPicture: UIImage?
-    var currentPictures = [UIImage]()
+    var currentPicture: Picture?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,8 +36,6 @@ class ViewController: UITableViewController, UIImagePickerControllerDelegate & U
         return 1
     }
     
-    
-    
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         guard let image = info[.editedImage] as? UIImage else { return }
 
@@ -55,10 +52,7 @@ class ViewController: UITableViewController, UIImagePickerControllerDelegate & U
         
         let path = getDocumentsDirectory().appendingPathComponent(picture.name)
         print("\(path.path) up")
-        
-        
-        currentPictures.append(UIImage(contentsOfFile: path.path)!)
-        
+
         tableView.reloadData()
 
         dismiss(animated: true)
@@ -84,12 +78,9 @@ class ViewController: UITableViewController, UIImagePickerControllerDelegate & U
         let path = getDocumentsDirectory().appendingPathComponent(picture.name)
         tableView.separatorStyle = .singleLine
         cell.pictureImage?.image = UIImage(contentsOfFile: path.path)
-        print("\(path.path) down")
-        //cell.imageView?.image = UIImage(contentsOfFile: path.path)
+        cell.captionLabel.text = picture.caption
         
-//        cell.imageView?.layer.borderWidth = 1
-//        cell.imageView?.layer.borderColor = UIColor.black.cgColor
-//        cell.layer.cornerRadius = 7
+        print("\(path.path) down")
 
         return cell
     }
@@ -99,20 +90,18 @@ class ViewController: UITableViewController, UIImagePickerControllerDelegate & U
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // 1: try loading the "Detail" view controller and typecasting it to be DetailViewController
+        
         if let vc = storyboard?.instantiateViewController(withIdentifier: "DetailVC") as? DetailVC {
-            // 2: success! Set its selectedImage property
+            currentPicture = pictures[indexPath.row]
+            vc.selectedImage = currentPicture//currentPictures[indexPath.row]
+            vc.table = tableView
             
-            vc.selectedImage = currentPictures[indexPath.row]
             print("\(indexPath.row) current row")
-            //tableView.cellForRow(at: indexPath)?.imageView
             
             tableView.reloadData()
-            
-            // 3: now push it onto the navigation controller
+
             navigationController?.pushViewController(vc, animated: true)
-            print("\(currentPictures.count) total pictures")
-            
+
         }
     }
 }

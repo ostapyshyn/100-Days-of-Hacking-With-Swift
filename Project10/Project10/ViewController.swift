@@ -60,13 +60,13 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
         let imageName = UUID().uuidString
         let imagePath = getDocumentsDirectory().appendingPathComponent(imageName)
         print(imageName)
-        
-        
+
+
 
         if let jpegData = image.jpegData(compressionQuality: 0.8) {
             try? jpegData.write(to: imagePath)
         }
-        
+
         let person = Person(name: "Unknown", image: imageName)
         people.append(person)
         collectionView.reloadData()

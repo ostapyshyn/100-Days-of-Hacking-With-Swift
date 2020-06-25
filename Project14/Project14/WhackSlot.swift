@@ -36,7 +36,28 @@ class WhackSlot: SKNode {
         addChild(cropNode)
     }
     
+    private func addEmitter(called name: String, at position: CGPoint, with zPosition: CGFloat = 0) {
+
+        if let emitter = SKEmitterNode(fileNamed: name) {
+            emitter.position = position
+            emitter.zPosition = zPosition
+
+            let numParticles = Double(emitter.numParticlesToEmit)
+            let lifetime = Double(emitter.particleLifetime)
+            let emitterDuration = numParticles * lifetime
+
+            let addEmitterAction = SKAction.run { self.addChild(emitter) }
+            let waitAction = SKAction.wait(forDuration: emitterDuration)
+            let removeAction = SKAction.run { emitter.removeFromParent() }
+            let actions = [addEmitterAction, waitAction, removeAction]
+            let sequence = SKAction.sequence(actions)
+            run(sequence)
+        }
+
+    }
+    
     func show(hideTime: Double) {
+        addEmitter(called: "mud", at: CGPoint(x: 10, y: -30))
         if isVisible { return }
         charNode.xScale = 1
         charNode.yScale = 1
@@ -52,6 +73,8 @@ class WhackSlot: SKNode {
             charNode.name = "charEnemy"
         }
         
+        
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + (hideTime * 3.5)) { [weak self] in
             self?.hide()
         }
@@ -65,11 +88,13 @@ class WhackSlot: SKNode {
     }
     
     func hit() {
+        addEmitter(called: "smoke", at: charNode.position, with: 2)
         isHit = true
 
         let delay = SKAction.wait(forDuration: 0.25)
         let hide = SKAction.moveBy(x: 0, y: -80, duration: 0.5)
         let notVisible = SKAction.run { [unowned self] in self.isVisible = false }
+        
         charNode.run(SKAction.sequence([delay, hide, notVisible]))
     }
     

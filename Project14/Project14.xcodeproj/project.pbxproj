@@ -15,6 +15,12 @@
 		0B4FB28424A0ED1A00FDAE40 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0B4FB28324A0ED1A00FDAE40 /* Assets.xcassets */; };
 		0B4FB28724A0ED1A00FDAE40 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0B4FB28524A0ED1A00FDAE40 /* LaunchScreen.storyboard */; };
 		0B9CA3DB24A21395001473D4 /* WhackSlot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B9CA3DA24A21395001473D4 /* WhackSlot.swift */; };
+		0BD97EA724A4B3BB00C630FD /* whack.caf in Resources */ = {isa = PBXBuildFile; fileRef = 0B4FB28F24A0EEA200FDAE40 /* whack.caf */; };
+		0BD97EA824A4B3C000C630FD /* gameOver.aif in Resources */ = {isa = PBXBuildFile; fileRef = 0BD97EA624A4A98900C630FD /* gameOver.aif */; };
+		0BD97EA924A4B3C300C630FD /* whackBad.caf in Resources */ = {isa = PBXBuildFile; fileRef = 0B4FB28E24A0EEA200FDAE40 /* whackBad.caf */; };
+		0BD97EAB24A4DD1100C630FD /* smoke.sks in Resources */ = {isa = PBXBuildFile; fileRef = 0BD97EAA24A4DD1100C630FD /* smoke.sks */; };
+		0BD97EAD24A4DD1900C630FD /* mud.sks in Resources */ = {isa = PBXBuildFile; fileRef = 0BD97EAC24A4DD1900C630FD /* mud.sks */; };
+		0BD97EAF24A4DE5300C630FD /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = 0BD97EAE24A4DE5300C630FD /* spark.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +36,10 @@
 		0B4FB28E24A0EEA200FDAE40 /* whackBad.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = whackBad.caf; sourceTree = "<group>"; };
 		0B4FB28F24A0EEA200FDAE40 /* whack.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = whack.caf; sourceTree = "<group>"; };
 		0B9CA3DA24A21395001473D4 /* WhackSlot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhackSlot.swift; sourceTree = "<group>"; };
+		0BD97EA624A4A98900C630FD /* gameOver.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = gameOver.aif; sourceTree = "<group>"; };
+		0BD97EAA24A4DD1100C630FD /* smoke.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = smoke.sks; sourceTree = "<group>"; };
+		0BD97EAC24A4DD1900C630FD /* mud.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = mud.sks; sourceTree = "<group>"; };
+		0BD97EAE24A4DE5300C630FD /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,11 +78,15 @@
 				0B4FB27E24A0ED1500FDAE40 /* GameViewController.swift */,
 				0B9CA3DA24A21395001473D4 /* WhackSlot.swift */,
 				0B4FB28024A0ED1500FDAE40 /* Main.storyboard */,
+				0BD97EAE24A4DE5300C630FD /* spark.png */,
 				0B4FB28324A0ED1A00FDAE40 /* Assets.xcassets */,
 				0B4FB28524A0ED1A00FDAE40 /* LaunchScreen.storyboard */,
 				0B4FB28824A0ED1A00FDAE40 /* Info.plist */,
 				0B4FB28F24A0EEA200FDAE40 /* whack.caf */,
+				0BD97EA624A4A98900C630FD /* gameOver.aif */,
 				0B4FB28E24A0EEA200FDAE40 /* whackBad.caf */,
+				0BD97EAA24A4DD1100C630FD /* smoke.sks */,
+				0BD97EAC24A4DD1900C630FD /* mud.sks */,
 			);
 			path = Project14;
 			sourceTree = "<group>";
@@ -136,9 +150,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				0B4FB28224A0ED1500FDAE40 /* Main.storyboard in Resources */,
+				0BD97EA724A4B3BB00C630FD /* whack.caf in Resources */,
 				0B4FB27924A0ED1500FDAE40 /* GameScene.sks in Resources */,
+				0BD97EAD24A4DD1900C630FD /* mud.sks in Resources */,
 				0B4FB28424A0ED1A00FDAE40 /* Assets.xcassets in Resources */,
+				0BD97EAF24A4DE5300C630FD /* spark.png in Resources */,
+				0BD97EA824A4B3C000C630FD /* gameOver.aif in Resources */,
 				0B4FB28724A0ED1A00FDAE40 /* LaunchScreen.storyboard in Resources */,
+				0BD97EA924A4B3C300C630FD /* whackBad.caf in Resources */,
+				0BD97EAB24A4DD1100C630FD /* smoke.sks in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -299,6 +319,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 44X6M65T9Y;
 				INFOPLIST_FILE = Project14/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -317,6 +338,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 44X6M65T9Y;
 				INFOPLIST_FILE = Project14/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

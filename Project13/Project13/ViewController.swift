@@ -9,7 +9,7 @@
 import UIKit
 
 class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
-
+    
     @IBOutlet var imageView: UIImageView!
     @IBOutlet var intensity: UISlider!
     var currentImage: UIImage!
@@ -34,15 +34,23 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         guard let image = info[.editedImage] as? UIImage else { return }
-
+        
         dismiss(animated: true)
-
+        
         currentImage = image
         
         let beginImage = CIImage(image: currentImage)
         currentFilter.setValue(beginImage, forKey: kCIInputImageKey)
-
+        
         applyProcessing()
+        
+        imageView.alpha = 0
+        
+        dismiss(animated: true) { [weak self] in
+            UIView.animate(withDuration: 1, delay: 0, options: [], animations: {
+                self?.imageView.alpha = 1
+            })
+        }
     }
     
     
@@ -53,7 +61,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
         picker.delegate = self
         present(picker, animated: true)
     }
-
+    
     @IBAction func intensityChanged(_ sender: UISlider) {
         applyProcessing()
     }
@@ -87,7 +95,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
             return
             
         }
-
+        
         UIImageWriteToSavedPhotosAlbum(image, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
     }
     
@@ -95,7 +103,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
     
     func applyProcessing() {
         let inputKeys = currentFilter.inputKeys
-
+        
         if inputKeys.contains(kCIInputIntensityKey) { currentFilter.setValue(intensity.value, forKey: kCIInputIntensityKey) }
         if inputKeys.contains(kCIInputRadiusKey) { currentFilter.setValue(radius.value * 200, forKey: kCIInputRadiusKey) }
         if inputKeys.contains(kCIInputScaleKey) { currentFilter.setValue(intensity.value * 10, forKey: kCIInputScaleKey) }
@@ -105,14 +113,17 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
         
         if let cgimg = context.createCGImage(outputImage, from: currentFilter.outputImage!.extent) {
             let processedImage = UIImage(cgImage: cgimg)
+            
             self.imageView.image = processedImage
+            
+            
         }
     }
     
     func setFilter(action: UIAlertAction) {
         // make sure we have a valid image before continuing!
         guard currentImage != nil else { return }
-
+        
         // safely read the alert action's title
         guard let actionTitle = action.title else { return }
         // Challenge_2:
@@ -120,10 +131,10 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
         //title = actionTitle
         
         currentFilter = CIFilter(name: actionTitle)
-
+        
         let beginImage = CIImage(image: currentImage)
         currentFilter.setValue(beginImage, forKey: kCIInputImageKey)
-
+        
         applyProcessing()
     }
     

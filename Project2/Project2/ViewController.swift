@@ -64,6 +64,30 @@ class ViewController: UIViewController {
         var title: String
         question += 1
         print(question)
+        UIView.animate(withDuration: 1,
+                       delay: 0,
+                       usingSpringWithDamping: 0.5,
+                       initialSpringVelocity: 5,
+                       options: [],
+                       animations: {
+            sender.transform = CGAffineTransform(scaleX: 0.8,
+                                                 y: 0.8)
+        }) { _ in
+            sender.transform = .identity
+            
+            if self.question == 10 {
+                //score = 0
+                let ac = UIAlertController(title: "Result:", message: "Your final score is \(self.score).", preferredStyle: .alert)
+                ac.addAction(UIAlertAction(title: "Continue", style: .default, handler: nil))
+                self.question = 0
+                
+                self.present(ac, animated: true)
+            }
+            
+        }
+        
+        
+        
         
         if sender.tag == correctAnswer {
             title = "Correct"
@@ -73,20 +97,14 @@ class ViewController: UIViewController {
             score -= 1
         }
         
-        if question == 10 {
-            //score = 0
-            let ac = UIAlertController(title: "Result:", message: "Your final score is \(score).", preferredStyle: .alert)
-            ac.addAction(UIAlertAction(title: "Continue", style: .default, handler: nil))
-            question = 0
-            
-            present(ac, animated: true)
-        }
+        
         
         if sender.tag != correctAnswer {
             let ac = UIAlertController(title: "Wrong!", message: "That’s the flag of \(sender.currentImage?.accessibilityIdentifier?.uppercased() ?? "0").", preferredStyle: .alert)
             ac.addAction(UIAlertAction(title: "Continue", style: .default, handler: askQuestion))
             present(ac, animated: true)
         }
+        
         
         let ac = UIAlertController(title: title, message: "Your score is \(score).", preferredStyle: .alert)
         ac.addAction(UIAlertAction(title: "Continue", style: .default, handler: askQuestion))

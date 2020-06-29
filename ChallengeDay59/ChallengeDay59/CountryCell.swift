@@ -11,7 +11,7 @@ import UIKit
 class CountryCell: UITableViewCell {
 
     @IBOutlet var flagImage: UIImageView!
-    @IBOutlet var countryLaabel: UILabel!
+    @IBOutlet var countryLabel: UILabel!
     @IBOutlet var capitalLabel: UILabel!
 
 }

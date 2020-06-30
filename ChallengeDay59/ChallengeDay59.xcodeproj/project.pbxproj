@@ -516,6 +516,8 @@
 		0B6E7DBC24A8E3D000DF0E61 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0B6E7DBB24A8E3D000DF0E61 /* Assets.xcassets */; };
 		0B6E7DBF24A8E3D000DF0E61 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0B6E7DBD24A8E3D000DF0E61 /* LaunchScreen.storyboard */; };
 		0B6E7DC724A8F31D00DF0E61 /* CountryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6E7DC624A8F31D00DF0E61 /* CountryCell.swift */; };
+		0B75683924AB86F3007196D8 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B75683824AB86F3007196D8 /* DetailViewController.swift */; };
+		0B75683B24ABB580007196D8 /* FlagCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B75683A24ABB580007196D8 /* FlagCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -1030,6 +1032,8 @@
 		0B6E7DBE24A8E3D000DF0E61 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0B6E7DC024A8E3D000DF0E61 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0B6E7DC624A8F31D00DF0E61 /* CountryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryCell.swift; sourceTree = "<group>"; };
+		0B75683824AB86F3007196D8 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		0B75683A24ABB580007196D8 /* FlagCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlagCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1579,6 +1583,8 @@
 				0B6E7DB224A8E3CE00DF0E61 /* AppDelegate.swift */,
 				0B6E7DB424A8E3CE00DF0E61 /* SceneDelegate.swift */,
 				0B6E7DB624A8E3CE00DF0E61 /* ViewController.swift */,
+				0B75683824AB86F3007196D8 /* DetailViewController.swift */,
+				0B75683A24ABB580007196D8 /* FlagCell.swift */,
 				0B6CA70224AA78FD00D3AD1B /* FlagUtils.swift */,
 				0B6CA70024AA3F9300D3AD1B /* Country.swift */,
 				0B6E7DC624A8F31D00DF0E61 /* CountryCell.swift */,
@@ -2166,9 +2172,11 @@
 				0B6E7DC724A8F31D00DF0E61 /* CountryCell.swift in Sources */,
 				0B6E7DB724A8E3CE00DF0E61 /* ViewController.swift in Sources */,
 				0B6E7DB324A8E3CE00DF0E61 /* AppDelegate.swift in Sources */,
+				0B75683B24ABB580007196D8 /* FlagCell.swift in Sources */,
 				0B6CA70124AA3F9300D3AD1B /* Country.swift in Sources */,
 				0B6E7DB524A8E3CE00DF0E61 /* SceneDelegate.swift in Sources */,
 				0B6CA70324AA78FD00D3AD1B /* FlagUtils.swift in Sources */,
+				0B75683924AB86F3007196D8 /* DetailViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -60,8 +60,8 @@ class ViewController: UITableViewController {
                 performSelector(onMainThread: #selector(showError), with: nil, waitUntilDone: false)
             }
             
-            tableView.performSelector(onMainThread: #selector(UITableView.reloadData), with: nil, waitUntilDone: false)
         }
+        tableView.performSelector(onMainThread: #selector(UITableView.reloadData), with: nil, waitUntilDone: false)
     }
     
     
@@ -70,6 +70,13 @@ class ViewController: UITableViewController {
         let ac = UIAlertController(title: "Loading error", message: "There was a problem loading the feed; please check your connection and try again.", preferredStyle: .alert)
         ac.addAction(UIAlertAction(title: "OK", style: .default))
         present(ac, animated: true)
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let vc = storyboard?.instantiateViewController(withIdentifier: "DetailViewController") as? DetailViewController {
+            vc.country = countries[indexPath.row]
+            navigationController?.pushViewController(vc, animated: true)
+        }
     }
     
     

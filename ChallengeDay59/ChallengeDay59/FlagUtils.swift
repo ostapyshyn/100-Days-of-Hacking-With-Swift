@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 let prefixSD = "flag_sd_"
 let prefixHD = "flag_hd_"
@@ -34,4 +35,14 @@ func getPrefix() -> String {
 enum FlagType {
     case HD
     case SD
+}
+
+
+class ViewControllers: UIViewController {
+    var username: String
+    
+    required init?(coder aDecoder: NSCoder) {
+        self.username = "Anonymous"
+        super.init(coder: aDecoder)
+    }
 }

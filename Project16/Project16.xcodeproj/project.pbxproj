@@ -14,6 +14,7 @@
 		0B45B7A424ACC968005AF012 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0B45B7A324ACC968005AF012 /* Assets.xcassets */; };
 		0B45B7A724ACC968005AF012 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0B45B7A524ACC968005AF012 /* LaunchScreen.storyboard */; };
 		0B45B7AF24ACDE97005AF012 /* Capital.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B45B7AE24ACDE97005AF012 /* Capital.swift */; };
+		0B73A70D24AE2D03006563CD /* webVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B73A70C24AE2D03006563CD /* webVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		0B45B7A624ACC968005AF012 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0B45B7A824ACC968005AF012 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0B45B7AE24ACDE97005AF012 /* Capital.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Capital.swift; sourceTree = "<group>"; };
+		0B73A70C24AE2D03006563CD /* webVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = webVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +64,7 @@
 				0B45B79C24ACC967005AF012 /* SceneDelegate.swift */,
 				0B45B79E24ACC967005AF012 /* ViewController.swift */,
 				0B45B7A024ACC967005AF012 /* Main.storyboard */,
+				0B73A70C24AE2D03006563CD /* webVC.swift */,
 				0B45B7AE24ACDE97005AF012 /* Capital.swift */,
 				0B45B7A324ACC968005AF012 /* Assets.xcassets */,
 				0B45B7A524ACC968005AF012 /* LaunchScreen.storyboard */,
@@ -143,6 +146,7 @@
 			files = (
 				0B45B79F24ACC967005AF012 /* ViewController.swift in Sources */,
 				0B45B79B24ACC967005AF012 /* AppDelegate.swift in Sources */,
+				0B73A70D24AE2D03006563CD /* webVC.swift in Sources */,
 				0B45B7AF24ACDE97005AF012 /* Capital.swift in Sources */,
 				0B45B79D24ACC967005AF012 /* SceneDelegate.swift in Sources */,
 			);

@@ -45,7 +45,9 @@ class ViewController: UITableViewController {
     
     @objc func fetchJSON() {
         
-        let urlString = "https://restcountries.eu/rest/v2/all?fields=name;alpha2Code;capital;population;demonym;area;nativeName;currencies;languages;flag"
+//        let urlString = "https://restcountries.eu/rest/v2/all?fields=name;alpha2Code;capital;population;demonym;area;nativeName;currencies;languages;flag"
+        
+        let urlString = "https://restcountries.eu/rest/v2/"
         
         if let url = URL(string: urlString) {
             

@@ -73,7 +73,8 @@ class DetailViewController: UITableViewController {
                 let image = UIImage(named: getFlagFileName(code: country.alpha2Code, type: .HD))
                 cell.flagImage.image = image
                 cell.flagImage.layer.borderWidth = 3
-
+                print(country.flag)
+                
 
             }
             return cell
@@ -117,6 +118,8 @@ class DetailViewController: UITableViewController {
         }
         return UITableViewCell()
     }
+    
+    
     
     func buildCurrency(for currency: Currency) -> String {
         let name = currency.name ?? "Unknown name"

@@ -10,9 +10,11 @@ import SpriteKit
 
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
-    
+    var isTracking = false
     let possibleEnemies = ["ball", "hammer", "tv"]
     var isGameOver = false
+    var enemyCounter = 0
+    var timeInterval: TimeInterval = 0.35
     var gameTimer: Timer?
     
     var starfield: SKEmitterNode!
@@ -33,6 +35,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         player.removeFromParent()
 
         isGameOver = true
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>,
+                               with event: UIEvent?) {
+
+        guard let touch = touches.first else { return }
+        let location = touch.location(in: self)
+
+        let nodes = Set(self.nodes(at: location))
+        // Only start tracking if the touch is in the spaceship
+        if nodes.contains(player) { isTracking = true }
     }
     
     override func didMove(to view: SKView) {
@@ -74,8 +87,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         sprite.physicsBody?.angularVelocity = 5
         sprite.physicsBody?.linearDamping = 0
         sprite.physicsBody?.angularDamping = 0
+        
+        enemyCounter += 1
+
+        if enemyCounter >= 20 {
+            enemyCounter = 0
+            timeInterval -= 0.01
+            gameTimer?.invalidate()
+            gameTimer = Timer.scheduledTimer(timeInterval: timeInterval,
+                                             target: self,
+                                             selector: #selector(createEnemy),
+                                             userInfo: nil, repeats: true)
+        }
     }
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard isTracking else { return }
         guard let touch = touches.first else { return }
         var location = touch.location(in: self)
 
@@ -86,9 +112,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
 
         player.position = location
+        
+        guard isTracking else { return }
+
+        
     }
     
-    
+    func endGame() {
+        isGameOver = true
+        gameTimer?.invalidate()
+        let moveAction = SKAction.move(to: CGPoint(x: 512, y: 360), duration: 0.6)
+        let scaleAction = SKAction.scale(to: 3, duration: 0.6)
+        let groupAction = SKAction.group([moveAction, scaleAction])
+        scoreLabel.run(groupAction)
+    }
     
     override func update(_ currentTime: TimeInterval) {
         for node in children {
@@ -101,4 +138,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             score += 1
         }
     }
+    
+    override func touchesEnded(_ touches: Set<UITouch>,
+                               with event: UIEvent?) {
+        isTracking = false
+    }
+    
+    
 }

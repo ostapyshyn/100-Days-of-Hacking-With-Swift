@@ -14,9 +14,8 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         
-        for i in 1 ... 100 {
-            print("Got number \(i)")
-        }
+        assert(1 == 1, "Maths failure!")
+        assert(1 == 2, "Maths failure!")
         
     }
 

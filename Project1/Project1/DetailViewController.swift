@@ -17,7 +17,7 @@ class DetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        assert(selectedImage != nil, "No value") // As you can see assert() takes two parameters: something to check, and a message to print out of the check fails.
         guard let pictures = pictures,
             let selectedImage = selectedImage else { return }
         

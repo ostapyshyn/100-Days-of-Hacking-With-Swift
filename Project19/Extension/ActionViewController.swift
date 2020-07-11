@@ -14,6 +14,7 @@ class ActionViewController: UIViewController {
     var pageTitle = ""
     var pageURL = ""
     @IBOutlet var script: UITextView!
+    let defaults = UserDefaults.standard
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,6 +22,7 @@ class ActionViewController: UIViewController {
         let notificationCenter = NotificationCenter.default
         notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillHideNotification, object: nil)
         notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .bookmarks, target: self, action: #selector(choose))
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
         if let inputItem = extensionContext?.inputItems.first as? NSExtensionItem {
@@ -30,6 +32,9 @@ class ActionViewController: UIViewController {
                     guard let javaScriptValues = itemDictionary[NSExtensionJavaScriptPreprocessingResultsKey] as? NSDictionary else { return }
                     self?.pageTitle = javaScriptValues["title"] as? String ?? ""
                     self?.pageURL = javaScriptValues["URL"] as? String ?? ""
+                    
+                    let url = URL(string: self!.pageURL)
+                    self!.defaults.set(url, forKey: "url")
 
                     DispatchQueue.main.async {
                         self?.title = self?.pageTitle
@@ -65,6 +70,23 @@ class ActionViewController: UIViewController {
         item.attachments = [customJavaScript]
 
         extensionContext?.completeRequest(returningItems: [item])
+    }
+    
+    @IBAction func choose() {
+        let optionMenu = UIAlertController(title: nil, message: "What do you want to do?", preferredStyle: .actionSheet)
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil )
+        optionMenu.addAction(cancelAction)
+        
+        for (title, example) in scriptExamples {
+            optionMenu.addAction(UIAlertAction(title: title, style: .default) { [weak self] _ in
+                self?.script.text = example
+            })
+        }
+
+        
+        
+        present(optionMenu, animated: true, completion: nil)
     }
 
 }
